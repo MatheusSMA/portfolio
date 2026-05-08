@@ -3214,6 +3214,7 @@
   };
 
   let currentModalId = null;
+  let _borrowedVideo = null; // { parent: HTMLElement, video: HTMLVideoElement }
 
   const isVideoSrc = src => /\.(mp4|webm|mov)$/i.test(src);
   const mediaTag = src => isVideoSrc(src)
@@ -3246,7 +3247,7 @@
 
     const headerMediaHtml = data.media
       ? (data.media.type === 'video'
-        ? `<div class="modal-header-media"><video src="${data.media.src}" autoplay loop muted playsinline></video></div>`
+        ? `<div class="modal-header-media" id="modal-hm-slot"></div>`
         : `<div class="modal-header-media"><img src="${data.media.src}" alt="${data.name}"></div>`)
       : '';
 
@@ -3287,6 +3288,27 @@
         `<div class="modal-groups">${groupsHtml}</div>`;
     }
 
+    // Populate video slot: borrow the already-buffered card video for instant playback
+    if (data.media && data.media.type === 'video') {
+      const slot = document.getElementById('modal-hm-slot');
+      if (slot) {
+        let videoEl = _borrowedVideo ? _borrowedVideo.video : null;
+        if (!videoEl) {
+          const cardEl = document.querySelector(`[onclick="openModal('${id}')"]`);
+          const mediaDiv = cardEl && (cardEl.querySelector('.company-media') || cardEl.querySelector('.project-media'));
+          videoEl = mediaDiv && mediaDiv.querySelector('video');
+          if (videoEl) _borrowedVideo = { parent: mediaDiv, video: videoEl };
+        }
+        if (videoEl) {
+          slot.appendChild(videoEl);
+        } else {
+          const v = document.createElement('video');
+          v.src = data.media.src; v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
+          slot.appendChild(v);
+        }
+      }
+    }
+
     document.getElementById('modal-overlay').classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -3309,6 +3331,10 @@
   }
 
   function closeModal() {
+    if (_borrowedVideo) {
+      _borrowedVideo.parent.appendChild(_borrowedVideo.video);
+      _borrowedVideo = null;
+    }
     document.getElementById('modal-overlay').classList.remove('active');
     document.body.style.overflow = '';
   }
