@@ -1535,6 +1535,28 @@
       line-height: 1;
     }
 
+    .tile-logo {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: 42px;
+      margin-bottom: 0.15rem;
+    }
+
+    .tile-logo img {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
+      transition: filter 0.2s, transform 0.2s;
+    }
+
+    .modal-company-tile:hover .tile-logo img {
+      transform: scale(1.04);
+      filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.35));
+    }
+
     .tile-name {
       color: var(--neon);
       line-height: 1.3;
@@ -2913,7 +2935,7 @@
       tags: ['Unity', 'AR', 'VR', 'C#', 'Touch Interactive'],
       groups: [
         {
-          name: '🏎️ Senna Park', items: [
+          name: '🏎️ Senna Park', logo: 'logoEmpresas/SennaPark.png', items: [
             { title: 'Senninha — Corrida Estacionária (Game Design)', stage: 'POC' },
             { title: 'Mensagem do Senna para Você (QR Code)', stage: 'POC' },
             { title: 'Jogo da Largada', stage: 'Mockup Dev' },
@@ -2922,7 +2944,7 @@
           ]
         },
         {
-          name: { pt: '🏟️ Museu Olímpico', en: '🏟️ Olympic Museum' }, items: [
+          name: { pt: '🏟️ Museu Olímpico', en: '🏟️ Olympic Museum' }, logo: 'logoEmpresas/MuseuOlimpico.png', items: [
             { title: 'Velódromo — Tablets de RA', stage: 'Alteração' },
             { title: 'Parque Olímpico: Coração dos Jogos | Maquete', stage: 'QA' },
             { title: 'Bug — Elementos que Congelam', stage: 'Alteração' },
@@ -2931,7 +2953,7 @@
           ]
         },
         {
-          name: '🧙 Wicked', items: [
+          name: '🧙 Wicked', logo: 'logoEmpresas/wicked.png', items: [
             { title: 'Vestiário — RA Face Try-On', stage: 'Entrega Final' },
             { title: 'Andar sobre o Jogo', stage: 'Entrega Final' },
             { title: 'Estrada Amarela', stage: 'Entrega Final' },
@@ -2941,7 +2963,7 @@
           ]
         },
         {
-          name: { pt: '🧽 Bob Esponja', en: '🧽 SpongeBob' }, items: [
+          name: { pt: '🧽 Bob Esponja', en: '🧽 SpongeBob' }, logo: { pt: 'logoEmpresas/bobesponja-pt.png', en: 'logoEmpresas/bobesponja-en.png' }, items: [
             { title: 'Mesa Touch Acervo — FANDOM', stage: 'v1' },
             { title: 'Game-Hero — Hamburguer', stage: 'QA2' },
             { title: 'Mapa do Circuito Interativo', stage: 'QA1' },
@@ -2949,7 +2971,7 @@
           ]
         },
         {
-          name: '🏛️ Firjan', items: [
+          name: '🏛️ Firjan', logo: 'logoEmpresas/firjan.png', items: [
             { title: 'F5 — Aprender a Reaprender', stage: 'Entrega Final' },
             { title: 'Qual o Caminho — Você Decide', stage: 'Entrega Final' },
             { title: 'Jogo dos 7 Erros', stage: 'Entrega Final' },
@@ -2959,26 +2981,26 @@
           ]
         },
         {
-          name: '🎀 Mattel', items: [
+          name: '🎀 Mattel', logo: 'logoEmpresas/Mattel.png', items: [
             { title: 'Polly — Espelho RA', stage: 'Entrega Final' },
             { title: 'Trocar Navegador Polly RA', stage: 'Alteração' },
           ]
         },
         {
-          name: '💧 Chico Bento Sabesp', items: [
+          name: '💧 Chico Bento Sabesp', logo: 'logoEmpresas/chicoBentoSabesp.png', items: [
             { title: 'Espantalho', stage: 'Entrega Final' },
             { title: 'Nascente', stage: 'Entrega Final' },
           ]
         },
         {
-          name: { pt: '🐰 Parque da Mônica', en: "🐰 Monica's Gang Park" }, items: [
+          name: { pt: '🐰 Parque da Mônica', en: "🐰 Monica's Gang Park" }, logo: 'logoEmpresas/ParqueDaMonica.png', items: [
             { title: 'Chão é Água', stage: 'Entrega Final', imageWide: 'Real games/Turma da Monica - Chão é Água.mp4' },
             { title: 'Laboratório Reativo', stage: 'Entrega Final', imageWide: 'Real games/Turma da Monica - Laboratório Reativo.mp4' },
             { title: 'Quente Frio', stage: 'Entrega Final', imageWide: 'Real games/Turma da Monica - Quente Frio.mp4' },
           ]
         },
         {
-          name: '📺 GEX — Globo TV Experience', items: [
+          name: '📺 GEX — Globo TV Experience', logo: 'logoEmpresas/GEX.png', items: [
             { title: 'Receitas Ana Maria', stage: 'Entrega Final' },
           ]
         },
@@ -2988,35 +3010,35 @@
           ]
         },
         {
-          name: '🔬 Sesi Lab', items: [
+          name: '🔬 Sesi Lab', logo: 'logoEmpresas/SESILAB.png', items: [
             { title: 'Experiências Interativas AR/VR', stage: 'Entrega Final' },
           ]
         },
         {
-          name: '🎨 MAC — Campina Grande', items: [
+          name: '🎨 MAC — Campina Grande', logo: 'logoEmpresas/MAC.png', items: [
             { title: 'Arte de Fio a Pavio (Telas de Pintura)', stage: 'Entrega Final' },
           ]
         },
         {
-          name: '🐷 Peppa Pig', items: [
+          name: '🐷 Peppa Pig', logo: 'logoEmpresas/Peppa_Pig_logo.png', items: [
             { title: 'Experiências Interativas', stage: 'Entrega Final' },
           ]
         },
         {
-          name: '🏥 Hospital Sírio Libanês', items: [
+          name: '🏥 Hospital Sírio Libanês', logo: 'logoEmpresas/HOSPITALSIRIOLIBANES.png', items: [
             { title: 'Atendimento Especializado — Óculos VR', stage: 'Entrega Final' },
             { title: 'Maquete RA', stage: 'Entrega Final' },
             { title: 'Interativo Sírio', stage: 'QA2' },
           ]
         },
         {
-          name: '🖼️ Viva Volpi', items: [
+          name: '🖼️ Viva Volpi', logo: 'logoEmpresas/VivaVolpi.png', items: [
             { title: 'Sala Sereia', stage: 'Arte' },
             { title: 'Colorindo Volpi (Telas)', stage: 'Arte' },
           ]
         },
         {
-          name: '🎀 Hello Kitty Pinball', items: [
+          name: '🎀 Hello Kitty Pinball', logo: 'logoEmpresas/HelloKit.png', items: [
             { title: 'Pinball Interativo', stage: 'Entrega Final' },
           ]
         },
@@ -3271,8 +3293,12 @@
         const countStr = count === 1 ? `1 ${projLabel}` : `${count} ${projsLabel}`;
         const hasVid = g.items.some(it => it.imageWide && isVideoSrc(it.imageWide));
         const vidBadge = hasVid ? `<span class="tile-has-video">▶ vídeo</span>` : '';
+        const logoSrc = g.logo ? (typeof g.logo === 'string' ? g.logo : g.logo[currentLang]) : null;
+        const visualHtml = logoSrc
+          ? `<span class="tile-logo"><img src="${logoSrc}" alt="${label}" loading="lazy"></span>`
+          : `<span class="tile-emoji">${emoji}</span>`;
         return `<div class="modal-company-tile" onclick="openModalGroup('${id}',${idx})">
-        <span class="tile-emoji">${emoji}</span>
+        ${visualHtml}
         <span class="tile-name">${label}</span>
         <span class="tile-meta">${countStr}${hasVid ? ' · ' : ''}${vidBadge}</span>
       </div>`;
