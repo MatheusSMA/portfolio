@@ -70,11 +70,31 @@
       transition: width 0.3s, height 0.3s, border-color 0.3s;
     }
 
-    body:has(a:hover) #cursor-ring,
-    body:has(button:hover) #cursor-ring {
-      width: 56px;
-      height: 56px;
-      border-color: var(--neon-purple);
+    /* clickable feedback — ring pulses instead of the OS hand pointer */
+    #cursor-ring.ring-click {
+      animation: ringPulse 0.85s ease-in-out infinite;
+    }
+
+    @keyframes ringPulse {
+      0%, 100% {
+        width: 46px;
+        height: 46px;
+        border-color: var(--neon-purple);
+        box-shadow: 0 0 0 rgba(191, 0, 255, 0);
+      }
+      50% {
+        width: 60px;
+        height: 60px;
+        border-color: var(--neon-green);
+        box-shadow: 0 0 16px rgba(0, 255, 136, 0.35);
+      }
+    }
+
+    /* desktop: keep the custom cursor flow — never show the native hand/arrow */
+    @media (min-width: 769px) {
+      *:not(input):not(textarea) {
+        cursor: none !important;
+      }
     }
 
     /* ─── CANVAS ─── */
@@ -1503,6 +1523,9 @@
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
+      min-height: 132px;
+      align-items: center;
+      text-align: center;
       font-family: 'Share Tech Mono', monospace;
       font-size: 0.72rem;
       color: #fff;
@@ -1531,25 +1554,36 @@
     }
 
     .tile-emoji {
-      font-size: 1.4rem;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      font-size: 2.4rem;
       line-height: 1;
     }
 
     .tile-logo {
+      flex: 1;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      height: 42px;
-      margin-bottom: 0.15rem;
+      justify-content: center;
+      width: 100%;
+      padding: 0.35rem 0;
     }
 
     .tile-logo img {
-      max-height: 100%;
-      max-width: 100%;
+      max-height: 80px;
+      max-width: 92%;
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
       transition: filter 0.2s, transform 0.2s;
+    }
+
+    .tile-logo.big img {
+      max-height: 120px;
+      max-width: 100%;
     }
 
     .modal-company-tile:hover .tile-logo img {
@@ -1560,6 +1594,20 @@
     .tile-name {
       color: var(--neon);
       line-height: 1.3;
+    }
+
+    /* desktop: reveal the name only on hover — keeps tiles clean & uniform */
+    @media (hover: hover) {
+      .tile-name {
+        opacity: 0;
+        transform: translateY(4px);
+        transition: opacity 0.2s, transform 0.2s;
+      }
+
+      .modal-company-tile:hover .tile-name {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .tile-meta {
@@ -2592,12 +2640,21 @@
   let mx = 0, my = 0, rx = 0, ry = 0;
   document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
   function animateCursor() {
-    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    // speed-adaptive easing: the ring catches up faster the faster the mouse moves
+    const dx = mx - rx, dy = my - ry;
+    const ease = Math.min(0.4, 0.2 + Math.hypot(dx, dy) * 0.0018);
+    rx += dx * ease; ry += dy * ease;
     cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
     ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
     requestAnimationFrame(animateCursor);
   }
   animateCursor();
+
+  // clickable feedback: pulse the ring when hovering interactive elements
+  const _clickSel = 'a, button, input, label, [onclick], .skill-tag, .project-card, .company-card, .modal-company-tile, .timeline-item, .contact-link, .nav-link, .footer-link, .flag-btn, .modal-close';
+  document.addEventListener('mouseover', e => {
+    ring.classList.toggle('ring-click', !!(e.target.closest && e.target.closest(_clickSel)));
+  });
 
   // ─── ANIMATED SUBTITLE ENGINE ───
   const stage = document.getElementById('subtitle-stage');
@@ -2931,7 +2988,7 @@
       name: 'Real Games Studio',
       gridMode: true,
       role: 'Tech Art & Game Developer · Dez 2023 – Atualmente',
-      desc: 'Empresa especializada em games e experiências interativas para grandes marcas e eventos. 16 clientes: Globo, Mattel, Wicked, Bob Esponja, FIRJAN, Parque da Mônica, Museu Olímpico e outros.',
+      desc: 'Empresa especializada em games e experiências interativas para grandes marcas e eventos. 17 clientes: Globo, Mattel, Wicked, Bob Esponja, FIRJAN, Parque da Mônica, Museu Olímpico, TMNT e outros.',
       tags: ['Unity', 'AR', 'VR', 'C#', 'Touch Interactive'],
       groups: [
         {
@@ -2944,7 +3001,7 @@
           ]
         },
         {
-          name: { pt: '🏟️ Museu Olímpico', en: '🏟️ Olympic Museum' }, logo: 'logoEmpresas/MuseuOlimpico.png', items: [
+          name: { pt: '🏟️ Museu Olímpico', en: '🏟️ Olympic Museum' }, logo: 'logoEmpresas/MuseuOlimpico.png', hideName: true, items: [
             { title: 'Velódromo — Tablets de RA', stage: 'Alteração' },
             { title: 'Parque Olímpico: Coração dos Jogos | Maquete', stage: 'QA' },
             { title: 'Bug — Elementos que Congelam', stage: 'Alteração' },
@@ -2953,7 +3010,7 @@
           ]
         },
         {
-          name: '🧙 Wicked', logo: 'logoEmpresas/wicked.png', items: [
+          name: '🧙 Wicked', logo: 'logoEmpresas/wicked.png', hideName: true, items: [
             { title: 'Vestiário — RA Face Try-On', stage: 'Entrega Final' },
             { title: 'Andar sobre o Jogo', stage: 'Entrega Final' },
             { title: 'Estrada Amarela', stage: 'Entrega Final' },
@@ -2963,7 +3020,12 @@
           ]
         },
         {
-          name: { pt: '🧽 Bob Esponja', en: '🧽 SpongeBob' }, logo: { pt: 'logoEmpresas/bobesponja-pt.png', en: 'logoEmpresas/bobesponja-en.png' }, items: [
+          name: '🐢 TMNT', items: [
+            { title: 'Tartarugas Ninja — VR', stage: 'Entrega Final', imageWide: 'Real games/TMNT VR.mp4' },
+          ]
+        },
+        {
+          name: { pt: '🧽 Bob Esponja', en: '🧽 SpongeBob' }, logo: { pt: 'logoEmpresas/bobesponja-pt.png', en: 'logoEmpresas/bobesponja-en.png' }, hideName: true, items: [
             { title: 'Mesa Touch Acervo — FANDOM', stage: 'v1' },
             { title: 'Game-Hero — Hamburguer', stage: 'QA2' },
             { title: 'Mapa do Circuito Interativo', stage: 'QA1' },
@@ -2971,7 +3033,7 @@
           ]
         },
         {
-          name: '🏛️ Firjan', logo: 'logoEmpresas/firjan.png', items: [
+          name: '🏛️ Firjan', logo: 'logoEmpresas/firjan.png', logoBig: true, items: [
             { title: 'F5 — Aprender a Reaprender', stage: 'Entrega Final' },
             { title: 'Qual o Caminho — Você Decide', stage: 'Entrega Final' },
             { title: 'Jogo dos 7 Erros', stage: 'Entrega Final' },
@@ -2981,13 +3043,13 @@
           ]
         },
         {
-          name: '🎀 Mattel', logo: 'logoEmpresas/Mattel.png', items: [
+          name: '🎀 Mattel', logo: 'logoEmpresas/Mattel.png', hideName: true, items: [
             { title: 'Polly — Espelho RA', stage: 'Entrega Final' },
             { title: 'Trocar Navegador Polly RA', stage: 'Alteração' },
           ]
         },
         {
-          name: '💧 Chico Bento Sabesp', logo: 'logoEmpresas/chicoBentoSabesp.png', items: [
+          name: '💧 Chico Bento Sabesp', logo: 'logoEmpresas/chicoBentoSabesp.png', hideName: true, items: [
             { title: 'Espantalho', stage: 'Entrega Final' },
             { title: 'Nascente', stage: 'Entrega Final' },
           ]
@@ -3010,35 +3072,35 @@
           ]
         },
         {
-          name: '🔬 Sesi Lab', logo: 'logoEmpresas/SESILAB.png', items: [
+          name: '🔬 Sesi Lab', logo: 'logoEmpresas/SESILAB.png', hideName: true, logoBig: true, items: [
             { title: 'Experiências Interativas AR/VR', stage: 'Entrega Final' },
           ]
         },
         {
-          name: '🎨 MAC — Campina Grande', logo: 'logoEmpresas/MAC.png', items: [
+          name: '🎨 MAC — Campina Grande', logo: 'logoEmpresas/MAC.png', hideName: true, items: [
             { title: 'Arte de Fio a Pavio (Telas de Pintura)', stage: 'Entrega Final' },
           ]
         },
         {
-          name: '🐷 Peppa Pig', logo: 'logoEmpresas/Peppa_Pig_logo.png', items: [
+          name: '🐷 Peppa Pig', logo: 'logoEmpresas/Peppa_Pig_logo.png', hideName: true, items: [
             { title: 'Experiências Interativas', stage: 'Entrega Final' },
           ]
         },
         {
-          name: '🏥 Hospital Sírio Libanês', logo: 'logoEmpresas/HOSPITALSIRIOLIBANES.png', items: [
+          name: '🏥 Hospital Sírio Libanês', logo: 'logoEmpresas/HOSPITALSIRIOLIBANES.png', hideName: true, logoBig: true, items: [
             { title: 'Atendimento Especializado — Óculos VR', stage: 'Entrega Final' },
             { title: 'Maquete RA', stage: 'Entrega Final' },
             { title: 'Interativo Sírio', stage: 'QA2' },
           ]
         },
         {
-          name: '🖼️ Viva Volpi', logo: 'logoEmpresas/VivaVolpi.png', items: [
+          name: '🖼️ Viva Volpi', logo: 'logoEmpresas/VivaVolpi.png', hideName: true, items: [
             { title: 'Sala Sereia', stage: 'Arte' },
             { title: 'Colorindo Volpi (Telas)', stage: 'Arte' },
           ]
         },
         {
-          name: '🎀 Hello Kitty Pinball', logo: 'logoEmpresas/HelloKit.png', items: [
+          name: '🎀 Hello Kitty Pinball', logo: 'logoEmpresas/HelloKit.png', hideName: true, logoBig: true, items: [
             { title: 'Pinball Interativo', stage: 'Entrega Final' },
           ]
         },
@@ -3295,7 +3357,7 @@
         const vidBadge = hasVid ? `<span class="tile-has-video">▶ vídeo</span>` : '';
         const logoSrc = g.logo ? (typeof g.logo === 'string' ? g.logo : g.logo[currentLang]) : null;
         const visualHtml = logoSrc
-          ? `<span class="tile-logo"><img src="${logoSrc}" alt="${label}" loading="lazy"></span>`
+          ? `<span class="tile-logo${g.logoBig ? ' big' : ''}"><img src="${logoSrc}" alt="${label}" loading="lazy"></span>`
           : `<span class="tile-emoji">${emoji}</span>`;
         return `<div class="modal-company-tile" onclick="openModalGroup('${id}',${idx})">
         ${visualHtml}
@@ -3563,7 +3625,7 @@
       'typewriter': ['Desenvolvedor de Games | Programador', 'Unity & Unreal Engine 5', 'Especialista VR / AR / XR', 'Tech Art & Experiências Interativas'],
       'ticker-rg': 'Senna Park &nbsp;·&nbsp; Museu Olímpico &nbsp;·&nbsp; Wicked &nbsp;·&nbsp; Bob Esponja &nbsp;·&nbsp; Firjan &nbsp;·&nbsp; Mattel &nbsp;·&nbsp; Sabesp &nbsp;·&nbsp; Parque da Mônica &nbsp;·&nbsp; GEX Globo &nbsp;·&nbsp; La Fontaine &nbsp;·&nbsp; Sesi Lab &nbsp;·&nbsp; MAC &nbsp;·&nbsp; Peppa Pig &nbsp;·&nbsp; Sírio Libanês &nbsp;·&nbsp; Viva Volpi &nbsp;·&nbsp; Hello Kitty &nbsp;&nbsp;&nbsp;&nbsp; Senna Park &nbsp;·&nbsp; Museu Olímpico &nbsp;·&nbsp; Wicked &nbsp;·&nbsp; Bob Esponja &nbsp;·&nbsp; Firjan &nbsp;·&nbsp; Mattel &nbsp;·&nbsp; Sabesp &nbsp;·&nbsp; Parque da Mônica &nbsp;·&nbsp; GEX Globo &nbsp;·&nbsp; La Fontaine &nbsp;·&nbsp; Sesi Lab &nbsp;·&nbsp; MAC &nbsp;·&nbsp; Peppa Pig &nbsp;·&nbsp; Sírio Libanês &nbsp;·&nbsp; Viva Volpi &nbsp;·&nbsp; Hello Kitty &nbsp;&nbsp;&nbsp;&nbsp;',
       'modal-role-rg': 'Tech Art & Game Developer · Dez 2023 – Atualmente',
-      'modal-desc-rg': 'Empresa especializada em games e experiências interativas para grandes marcas e eventos. 16 clientes: Globo, Mattel, Wicked, Bob Esponja, FIRJAN, Parque da Mônica, Museu Olímpico, Peppa Pig, Hello Kitty e outros.',
+      'modal-desc-rg': 'Empresa especializada em games e experiências interativas para grandes marcas e eventos. 17 clientes: Globo, Mattel, Wicked, Bob Esponja, FIRJAN, Parque da Mônica, Museu Olímpico, Peppa Pig, Hello Kitty, TMNT e outros.',
       'modal-role-67': 'Game Developer & Team Lead · Mar 2022 – Mar 2023',
       'modal-desc-67': 'Startup focada em jogos hypercasual mobile. Liderança de equipe, integração de SDKs (Android/Facebook), build e publicação na Play Store.',
       'modal-role-sony': 'Backend & Game Developer · Mai 2024 – Mai 2025',
@@ -3649,7 +3711,7 @@
       'typewriter': ['Game Developer | Programmer', 'Unity & Unreal Engine 5', 'VR / AR / XR Specialist', 'Tech Art & Interactive Experiences'],
       'ticker-rg': 'Senna Park &nbsp;·&nbsp; Olympic Museum &nbsp;·&nbsp; Wicked &nbsp;·&nbsp; SpongeBob &nbsp;·&nbsp; Firjan &nbsp;·&nbsp; Mattel &nbsp;·&nbsp; Sabesp &nbsp;·&nbsp; Monica\'s Gang Park &nbsp;·&nbsp; GEX Globo &nbsp;·&nbsp; La Fontaine &nbsp;·&nbsp; Sesi Lab &nbsp;·&nbsp; MAC &nbsp;·&nbsp; Peppa Pig &nbsp;·&nbsp; Sírio Libanês Hospital &nbsp;·&nbsp; Viva Volpi &nbsp;·&nbsp; Hello Kitty &nbsp;&nbsp;&nbsp;&nbsp; Senna Park &nbsp;·&nbsp; Olympic Museum &nbsp;·&nbsp; Wicked &nbsp;·&nbsp; SpongeBob &nbsp;·&nbsp; Firjan &nbsp;·&nbsp; Mattel &nbsp;·&nbsp; Sabesp &nbsp;·&nbsp; Monica\'s Gang Park &nbsp;·&nbsp; GEX Globo &nbsp;·&nbsp; La Fontaine &nbsp;·&nbsp; Sesi Lab &nbsp;·&nbsp; MAC &nbsp;·&nbsp; Peppa Pig &nbsp;·&nbsp; Sírio Libanês Hospital &nbsp;·&nbsp; Viva Volpi &nbsp;·&nbsp; Hello Kitty &nbsp;&nbsp;&nbsp;&nbsp;',
       'modal-role-rg': 'Tech Art & Game Developer · Dec 2023 – Present',
-      'modal-desc-rg': 'Company specialized in games and interactive experiences for major brands and events. 16 clients: Globo, Mattel, Wicked, SpongeBob, FIRJAN, Monica\'s Gang Park, Olympic Museum, Peppa Pig, Hello Kitty and more.',
+      'modal-desc-rg': 'Company specialized in games and interactive experiences for major brands and events. 17 clients: Globo, Mattel, Wicked, SpongeBob, FIRJAN, Monica\'s Gang Park, Olympic Museum, Peppa Pig, Hello Kitty, TMNT and more.',
       'modal-role-67': 'Game Developer & Team Lead · Mar 2022 – Mar 2023',
       'modal-desc-67': 'Startup focused on hypercasual mobile games. Team leadership, SDK integration (Android/Facebook), build and publishing on Play Store.',
       'modal-role-sony': 'Backend & Game Developer · May 2024 – May 2025',
