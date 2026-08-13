@@ -1730,6 +1730,59 @@
       display: block;
     }
 
+    /* Multi-video gallery (main player + switch tabs) */
+    .modal-video-gallery {
+      aspect-ratio: auto;
+      height: auto;
+      overflow: visible;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .modal-video-gallery video {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      background: var(--bg3);
+      border: 1px solid rgba(0, 255, 136, 0.25);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.08);
+    }
+
+    .modal-video-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .mvg-tab {
+      flex: 1 1 auto;
+      min-width: 120px;
+      padding: 0.5rem 0.75rem;
+      font-family: inherit;
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+      color: var(--text-dim);
+      background: var(--bg3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      text-align: center;
+    }
+
+    .mvg-tab:hover {
+      color: var(--text);
+      border-color: rgba(0, 255, 136, 0.4);
+    }
+
+    .mvg-tab.active {
+      color: #00ff88;
+      border-color: rgba(0, 255, 136, 0.6);
+      background: rgba(0, 255, 136, 0.08);
+      box-shadow: 0 0 12px rgba(0, 255, 136, 0.12);
+    }
+
     .modal-item-thumb {
       width: 56px;
       height: 56px;
@@ -2259,7 +2312,8 @@
 
           <div class="company-card reveal reveal-delay-1" onclick="openModal('luminalab')">
             <div class="company-media">
-              <video src="other Experiences/LuminaLab AI.mp4" autoplay loop muted playsinline></video>
+              <video class="cycle-video" autoplay muted playsinline
+                data-sources="other Experiences/Empoli Realtime Render.mp4|other Experiences/Empoli Mobile.mp4|other Experiences/LuminaLab AI.mp4"></video>
             </div>
             <div class="company-info">
               <h3 class="company-name">LuminaLab AI <span class="intl-badge">🌎 Miami</span></h3>
@@ -2986,6 +3040,18 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+  // ─── CYCLING CARD VIDEOS (plays a playlist in order, looping) ───
+  document.querySelectorAll('video.cycle-video').forEach(v => {
+    const sources = (v.dataset.sources || '').split('|').map(s => s.trim()).filter(Boolean);
+    if (!sources.length) return;
+    let i = 0;
+    const play = () => { v.src = sources[i]; v.play().catch(() => {}); };
+    const next = () => { i = (i + 1) % sources.length; play(); };
+    v.addEventListener('ended', next);
+    v.addEventListener('error', next);
+    play();
+  });
+
   // ─── MODAL DATA ───
   const modalData = {
     'real-games': {
@@ -3160,7 +3226,11 @@
       role: 'Backend & Game Developer · Fev 2025 – Jul 2025',
       desc: 'Projeto para cliente em Miami — VR e IA para construções dinâmicas voltadas a profissionais de arquitetura. Add-on Revit, IA de imagem e integração Apple Pay/Google Pay/Stripe.',
       tags: ['C#', 'Python', 'PyTorch', '.NET', 'Unity', 'VR', 'Revit', 'Stripe', 'CI/CD'],
-      media: { type: 'video', src: 'other Experiences/LuminaLab AI.mp4' },
+      videos: [
+        { src: 'other Experiences/Empoli Realtime Render.mp4', label: 'Realtime Render' },
+        { src: 'other Experiences/Empoli Mobile.mp4', label: 'Empoli Mobile (iOS / Android)' },
+        { src: 'other Experiences/LuminaLab AI.mp4', label: 'Empoli VR' },
+      ],
       groups: [
         {
           name: '🏗️ Projetos', items: [
@@ -3333,11 +3403,18 @@
     const desc = data.desc || (data.descKey ? t[data.descKey] : '');
     const tagsHtml = data.tags.map(tg => `<span class="modal-tag">${tg}</span>`).join('');
 
-    const headerMediaHtml = data.media
-      ? (data.media.type === 'video'
-        ? `<div class="modal-header-media" id="modal-hm-slot"></div>`
-        : `<div class="modal-header-media"><img src="${data.media.src}" alt="${data.name}"></div>`)
-      : '';
+    const headerMediaHtml = data.videos
+      ? `<div class="modal-header-media modal-video-gallery" id="modal-video-gallery">
+          <video id="mvg-player" autoplay muted playsinline loop></video>
+          <div class="modal-video-tabs">
+            ${data.videos.map((v, i) => `<button class="mvg-tab${i === 0 ? ' active' : ''}" data-src="${v.src}">${v.label}</button>`).join('')}
+          </div>
+        </div>`
+      : data.media
+        ? (data.media.type === 'video'
+          ? `<div class="modal-header-media" id="modal-hm-slot"></div>`
+          : `<div class="modal-header-media"><img src="${data.media.src}" alt="${data.name}"></div>`)
+        : '';
 
     const header = `<div class="modal-header">
       <h2 class="modal-title">${data.name}</h2>
@@ -3399,6 +3476,19 @@
           slot.appendChild(v);
         }
       }
+    }
+
+    // Multi-video gallery (e.g. LuminaLab): main player + tabs, starts on first video
+    if (data.videos) {
+      const player = document.getElementById('mvg-player');
+      const tabs = Array.from(document.querySelectorAll('#modal-video-gallery .mvg-tab'));
+      const playSrc = src => { if (player) { player.src = src; player.play().catch(() => {}); } };
+      if (data.videos[0]) playSrc(data.videos[0].src);
+      tabs.forEach(tab => tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        playSrc(tab.dataset.src);
+      }));
     }
 
     document.getElementById('modal-overlay').classList.add('active');
