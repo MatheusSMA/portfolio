@@ -2337,8 +2337,8 @@
 
           <div class="company-card reveal reveal-delay-1" onclick="openModal('clickideia')">
             <div class="company-media"
-              data-slides='["Clickideia/Casa Sombra - Clickideia.gif","Clickideia/Fabulas - Clickideia.gif","Clickideia/Festa à Fantasia - Clickideia.gif","Clickideia/Quiz.mp4","Clickideia/Tabuleiro.mp4","Clickideia/Viagem ao Espaço.mp4"]'>
-              <img src="Clickideia/Casa Sombra - Clickideia.gif" alt="Clickideia">
+              data-slides='["Clickideia/Casa Sombra - Clickideia.mp4","Clickideia/Fabulas - Clickideia.mp4","Clickideia/Festa à Fantasia - Clickideia.mp4","Clickideia/Quiz.mp4","Clickideia/Tabuleiro.mp4","Clickideia/Viagem ao Espaço.mp4"]'>
+              <img src="Clickideia/Casa Sombra - Clickideia.mp4" alt="Clickideia">
             </div>
             <div class="company-info">
               <h3 class="company-name">Clickideia</h3>
@@ -2350,7 +2350,7 @@
 
           <div class="company-card reveal reveal-delay-2" onclick="openModal('gofretes')">
             <div class="company-media">
-              <img src="other Experiences/GOFretes.jpg" alt="GOFretes">
+              <img src="other Experiences/GOFretes.webp" alt="GOFretes">
             </div>
             <div class="company-info">
               <h3 class="company-name">GOFretes</h3>
@@ -3046,9 +3046,8 @@
     if (!sources.length) return;
     let i = 0;
     const play = () => { v.src = sources[i]; v.play().catch(() => {}); };
-    const next = () => { i = (i + 1) % sources.length; play(); };
-    v.addEventListener('ended', next);
-    v.addEventListener('error', next);
+    // Advance only when a clip finishes, so the playlist always starts at index 0 (Realtime Render).
+    v.addEventListener('ended', () => { i = (i + 1) % sources.length; play(); });
     play();
   });
 
@@ -3062,7 +3061,7 @@
       tags: ['Unity', 'AR', 'VR', 'C#', 'Touch Interactive'],
       groups: [
         {
-          name: '🏎️ Senna Park', logo: 'logoEmpresas/SennaPark.png', items: [
+          name: '🏎️ Senna Park', logo: 'logoEmpresas/SennaPark.webp', items: [
             { title: 'Senninha — Corrida Estacionária (Game Design)', stage: 'POC' },
             { title: 'Mensagem do Senna para Você (QR Code)', stage: 'POC' },
             { title: 'Jogo da Largada', stage: 'Mockup Dev' },
@@ -3071,7 +3070,7 @@
           ]
         },
         {
-          name: { pt: '🏟️ Museu Olímpico', en: '🏟️ Olympic Museum' }, logo: 'logoEmpresas/MuseuOlimpico.png', hideName: true, items: [
+          name: { pt: '🏟️ Museu Olímpico', en: '🏟️ Olympic Museum' }, logo: 'logoEmpresas/MuseuOlimpico.webp', hideName: true, items: [
             { title: 'Velódromo — Tablets de RA', stage: 'Alteração' },
             { title: 'Parque Olímpico: Coração dos Jogos | Maquete', stage: 'QA' },
             { title: 'Bug — Elementos que Congelam', stage: 'Alteração' },
@@ -3095,7 +3094,7 @@
           ]
         },
         {
-          name: { pt: '🧽 Bob Esponja', en: '🧽 SpongeBob' }, logo: { pt: 'logoEmpresas/bobesponja-pt.png', en: 'logoEmpresas/bobesponja-en.png' }, hideName: true, items: [
+          name: { pt: '🧽 Bob Esponja', en: '🧽 SpongeBob' }, logo: { pt: 'logoEmpresas/bobesponja-pt.webp', en: 'logoEmpresas/bobesponja-en.webp' }, hideName: true, items: [
             { title: 'Mesa Touch Acervo — FANDOM', stage: 'v1' },
             { title: 'Game-Hero — Hamburguer', stage: 'QA2' },
             { title: 'Mapa do Circuito Interativo', stage: 'QA1' },
@@ -3103,7 +3102,7 @@
           ]
         },
         {
-          name: '🏛️ Firjan', logo: 'logoEmpresas/firjan.png', logoBig: true, items: [
+          name: '🏛️ Firjan', logo: 'logoEmpresas/firjan.webp', logoBig: true, items: [
             { title: 'F5 — Aprender a Reaprender', stage: 'Entrega Final' },
             { title: 'Qual o Caminho — Você Decide', stage: 'Entrega Final' },
             { title: 'Jogo dos 7 Erros', stage: 'Entrega Final' },
@@ -3113,13 +3112,13 @@
           ]
         },
         {
-          name: '🎀 Mattel', logo: 'logoEmpresas/Mattel.png', hideName: true, items: [
+          name: '🎀 Mattel', logo: 'logoEmpresas/Mattel.webp', hideName: true, items: [
             { title: 'Polly — Espelho RA', stage: 'Entrega Final' },
             { title: 'Trocar Navegador Polly RA', stage: 'Alteração' },
           ]
         },
         {
-          name: '💧 Chico Bento Sabesp', logo: 'logoEmpresas/chicoBentoSabesp.png', hideName: true, items: [
+          name: '💧 Chico Bento Sabesp', logo: 'logoEmpresas/chicoBentoSabesp.webp', hideName: true, items: [
             { title: 'Espantalho', stage: 'Entrega Final' },
             { title: 'Nascente', stage: 'Entrega Final' },
           ]
@@ -3132,7 +3131,7 @@
           ]
         },
         {
-          name: '📺 GEX — Globo TV Experience', logo: 'logoEmpresas/GEX.png', items: [
+          name: '📺 GEX — Globo TV Experience', logo: 'logoEmpresas/GEX.webp', items: [
             { title: 'Receitas Ana Maria', stage: 'Entrega Final' },
           ]
         },
@@ -3142,35 +3141,35 @@
           ]
         },
         {
-          name: '🔬 Sesi Lab', logo: 'logoEmpresas/SESILAB.png', hideName: true, logoBig: true, items: [
+          name: '🔬 Sesi Lab', logo: 'logoEmpresas/SESILAB.webp', hideName: true, logoBig: true, items: [
             { title: 'Experiências Interativas AR/VR', stage: 'Entrega Final' },
           ]
         },
         {
-          name: '🎨 MAC — Campina Grande', logo: 'logoEmpresas/MAC.png', hideName: true, items: [
+          name: '🎨 MAC — Campina Grande', logo: 'logoEmpresas/MAC.webp', hideName: true, items: [
             { title: 'Arte de Fio a Pavio (Telas de Pintura)', stage: 'Entrega Final' },
           ]
         },
         {
-          name: '🐷 Peppa Pig', logo: 'logoEmpresas/Peppa_Pig_logo.png', hideName: true, items: [
+          name: '🐷 Peppa Pig', logo: 'logoEmpresas/Peppa_Pig_logo.webp', hideName: true, items: [
             { title: 'Experiências Interativas', stage: 'Entrega Final' },
           ]
         },
         {
-          name: '🏥 Hospital Sírio Libanês', logo: 'logoEmpresas/HOSPITALSIRIOLIBANES.png', hideName: true, logoBig: true, items: [
+          name: '🏥 Hospital Sírio Libanês', logo: 'logoEmpresas/HOSPITALSIRIOLIBANES.webp', hideName: true, logoBig: true, items: [
             { title: 'Atendimento Especializado — Óculos VR', stage: 'Entrega Final' },
             { title: 'Maquete RA', stage: 'Entrega Final' },
             { title: 'Interativo Sírio', stage: 'QA2' },
           ]
         },
         {
-          name: '🖼️ Viva Volpi', logo: 'logoEmpresas/VivaVolpi.png', hideName: true, items: [
+          name: '🖼️ Viva Volpi', logo: 'logoEmpresas/VivaVolpi.webp', hideName: true, items: [
             { title: 'Sala Sereia', stage: 'Arte' },
             { title: 'Colorindo Volpi (Telas)', stage: 'Arte' },
           ]
         },
         {
-          name: '🎀 Hello Kitty Pinball', logo: 'logoEmpresas/HelloKit.png', hideName: true, logoBig: true, items: [
+          name: '🎀 Hello Kitty Pinball', logo: 'logoEmpresas/HelloKit.webp', hideName: true, logoBig: true, items: [
             { title: 'Pinball Interativo', stage: 'Entrega Final' },
           ]
         },
@@ -3185,24 +3184,24 @@
       groups: [
         {
           name: '📱 Jogos Hypercasual Publicados', items: [
-            { title: 'Crowded Balls', stage: 'Mobile', image: "67 bits/Crowed Balls.jpg" },
-            { title: "Fish'em", stage: 'Mobile', image: "67 bits/Fish'em all.jpg" },
-            { title: 'Crazy Crowded', stage: 'Mobile', image: "67 bits/Crazy Crowed.jpg" },
-            { title: 'Crowded Bus Race', stage: 'Mobile', image: "67 bits/Crowed Bus.jpg" },
-            { title: 'Laser Hero', stage: 'Mobile', image: "67 bits/Laser Hero.jpg" },
-            { title: 'Level Up Fighter', stage: 'Mobile', image: "67 bits/Level up Fighter.jpg" },
-            { title: 'Drag Them All', stage: 'Mobile', image: "67 bits/Drag Them All.jpg" },
-            { title: 'Big Crusher', stage: 'Mobile', image: "67 bits/Big Crusher.jpg" },
-            { title: 'She Needs Help!', stage: 'Mobile', image: "67 bits/She needs help!.jpg" },
-            { title: 'Merging Thief', stage: 'Mobile', image: "67 bits/Merging Thief.jpg" },
-            { title: 'Human Shield', stage: 'Mobile', image: "67 bits/Human Shield.jpg" },
-            { title: 'Gym Beast', stage: 'Mobile', image: "67 bits/Gym Beast.jpg" },
-            { title: 'Stacking Sword', stage: 'Mobile', image: "67 bits/Stacking Sword.jpg" },
-            { title: 'Food Gun', stage: 'Mobile', image: "67 bits/Food Gun.jpg" },
-            { title: 'Waiter Hero', stage: 'Mobile', image: "67 bits/Waiter Hero.jpg" },
-            { title: 'Building Builder', stage: 'Mobile', image: "67 bits/Building Builder.jpg" },
-            { title: 'Methaverse Runner 3D', stage: 'Mobile', image: "67 bits/Methaverse Runner.jpg" },
-            { title: 'Weapon Thief', stage: 'Mobile', image: "67 bits/Weapon Thief.jpg" },
+            { title: 'Crowded Balls', stage: 'Mobile', image: "67 bits/Crowed Balls.webp" },
+            { title: "Fish'em", stage: 'Mobile', image: "67 bits/Fish'em all.webp" },
+            { title: 'Crazy Crowded', stage: 'Mobile', image: "67 bits/Crazy Crowed.webp" },
+            { title: 'Crowded Bus Race', stage: 'Mobile', image: "67 bits/Crowed Bus.webp" },
+            { title: 'Laser Hero', stage: 'Mobile', image: "67 bits/Laser Hero.webp" },
+            { title: 'Level Up Fighter', stage: 'Mobile', image: "67 bits/Level up Fighter.webp" },
+            { title: 'Drag Them All', stage: 'Mobile', image: "67 bits/Drag Them All.webp" },
+            { title: 'Big Crusher', stage: 'Mobile', image: "67 bits/Big Crusher.webp" },
+            { title: 'She Needs Help!', stage: 'Mobile', image: "67 bits/She needs help!.webp" },
+            { title: 'Merging Thief', stage: 'Mobile', image: "67 bits/Merging Thief.webp" },
+            { title: 'Human Shield', stage: 'Mobile', image: "67 bits/Human Shield.webp" },
+            { title: 'Gym Beast', stage: 'Mobile', image: "67 bits/Gym Beast.webp" },
+            { title: 'Stacking Sword', stage: 'Mobile', image: "67 bits/Stacking Sword.webp" },
+            { title: 'Food Gun', stage: 'Mobile', image: "67 bits/Food Gun.webp" },
+            { title: 'Waiter Hero', stage: 'Mobile', image: "67 bits/Waiter Hero.webp" },
+            { title: 'Building Builder', stage: 'Mobile', image: "67 bits/Building Builder.webp" },
+            { title: 'Methaverse Runner 3D', stage: 'Mobile', image: "67 bits/Methaverse Runner.webp" },
+            { title: 'Weapon Thief', stage: 'Mobile', image: "67 bits/Weapon Thief.webp" },
           ]
         }
       ]
@@ -3265,9 +3264,9 @@
       groups: [
         {
           name: '📚 Jogos Educacionais', items: [
-            { title: 'Casa Sombra', stage: 'Publicado', imageWide: 'Clickideia/Casa Sombra - Clickideia.gif' },
-            { title: 'Fábulas', stage: 'Publicado', imageWide: 'Clickideia/Fabulas - Clickideia.gif' },
-            { title: 'Festa à Fantasia', stage: 'Publicado', imageWide: 'Clickideia/Festa à Fantasia - Clickideia.gif' },
+            { title: 'Casa Sombra', stage: 'Publicado', imageWide: 'Clickideia/Casa Sombra - Clickideia.mp4' },
+            { title: 'Fábulas', stage: 'Publicado', imageWide: 'Clickideia/Fabulas - Clickideia.mp4' },
+            { title: 'Festa à Fantasia', stage: 'Publicado', imageWide: 'Clickideia/Festa à Fantasia - Clickideia.mp4' },
             { title: 'Quiz', stage: 'Publicado', imageWide: 'Clickideia/Quiz.mp4' },
             { title: 'Tabuleiro', stage: 'Publicado', imageWide: 'Clickideia/Tabuleiro.mp4' },
             { title: 'Viagem ao Espaço', stage: 'Publicado', imageWide: 'Clickideia/Viagem ao Espaço.mp4' },
@@ -3280,7 +3279,7 @@
       role: 'Fullstack Developer · Set 2021 – Jan 2022',
       desc: 'Plataforma de cotação de fretes online — conecta transportadoras para encontrar o melhor preço de acordo com o perfil de carga.',
       tags: ['ASP.NET MVC 3', 'C#', 'Microsoft Azure', 'MySQL', 'HTML', 'CSS', 'JavaScript'],
-      media: { type: 'image', src: 'other Experiences/GOFretes.jpg' },
+      media: { type: 'image', src: 'other Experiences/GOFretes.webp' },
       groups: [
         {
           name: '🚛 Projeto', items: [
