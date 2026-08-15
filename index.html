@@ -2250,19 +2250,7 @@
         <p class="projects-category-title" data-i18n="cat-company">Projetos de Empresa — Clique para ver detalhes</p>
         <div class="company-grid">
 
-          <div class="company-card reveal" onclick="openModal('topmid')">
-            <div class="company-media">
-              <div class="company-logo-area"><span class="company-icon">🚀</span></div>
-            </div>
-            <div class="company-info">
-              <h3 class="company-name">TopMid Studio</h3>
-              <p class="company-role">CEO & Game Developer</p>
-              <p class="company-count" data-i18n="cc-topmid">Empresa Própria · Unity + Unreal + VR/AR</p>
-              <span class="company-arrow">→</span>
-            </div>
-          </div>
-
-          <div class="company-card reveal reveal-delay-1" onclick="openModal('real-games')">
+          <div class="company-card reveal" onclick="openModal('real-games')">
             <div class="company-media"
               data-slides='["Real games/TMNT VR.mp4","Real games/Turma da Monica - Chão é Água.mp4","Real games/Turma da Monica - Laboratório Reativo.mp4","Real games/Turma da Monica - Quente Frio.mp4"]'>
               <video src="Real games/TMNT VR.mp4" autoplay loop muted playsinline></video>
@@ -2286,14 +2274,15 @@
             </div>
           </div>
 
-          <div class="company-card reveal reveal-delay-1" onclick="openModal('67bits')">
-            <div class="company-media">
-              <video src="67 bits/67 Bits Portfolio.mp4" autoplay loop muted playsinline></video>
+          <div class="company-card reveal reveal-delay-1" onclick="openModal('luminalab')">
+            <div class="company-media" data-interval="10000" data-starts="[9,0,0]"
+              data-slides='["other Experiences/Empoli Realtime Render.mp4","other Experiences/Empoli Mobile.mp4","other Experiences/LuminaLab AI.mp4"]'>
+              <video src="other Experiences/Empoli Realtime Render.mp4" autoplay loop muted playsinline></video>
             </div>
             <div class="company-info">
-              <h3 class="company-name">67 Bits Studio</h3>
-              <p class="company-role">Game Developer</p>
-              <p class="company-count" data-i18n="cc-67">18 jogos · Hypercasual Mobile</p>
+              <h3 class="company-name">LuminaLab AI <span class="intl-badge">🌎 Miami</span></h3>
+              <p class="company-role">Backend & Game Developer</p>
+              <p class="company-count">Revit · PyTorch · VR Architecture</p>
               <span class="company-arrow">→</span>
             </div>
           </div>
@@ -2310,15 +2299,27 @@
             </div>
           </div>
 
-          <div class="company-card reveal reveal-delay-1" onclick="openModal('luminalab')">
-            <div class="company-media">
-              <video class="cycle-video" autoplay muted playsinline
-                data-sources="other Experiences/Empoli Realtime Render.mp4|other Experiences/Empoli Mobile.mp4|other Experiences/LuminaLab AI.mp4"></video>
+          <div class="company-card reveal" onclick="openModal('clickideia')">
+            <div class="company-media"
+              data-slides='["Clickideia/Casa Sombra - Clickideia.mp4","Clickideia/Fabulas - Clickideia.mp4","Clickideia/Festa à Fantasia - Clickideia.mp4","Clickideia/Quiz.mp4","Clickideia/Tabuleiro.mp4","Clickideia/Viagem ao Espaço.mp4"]'>
+              <video src="Clickideia/Casa Sombra - Clickideia.mp4" autoplay loop muted playsinline></video>
             </div>
             <div class="company-info">
-              <h3 class="company-name">LuminaLab AI <span class="intl-badge">🌎 Miami</span></h3>
-              <p class="company-role">Backend & Game Developer</p>
-              <p class="company-count">Revit · PyTorch · VR Architecture</p>
+              <h3 class="company-name">Clickideia</h3>
+              <p class="company-role">Game Developer</p>
+              <p class="company-count" data-i18n="cc-click">Jogos Educacionais · Web</p>
+              <span class="company-arrow">→</span>
+            </div>
+          </div>
+
+          <div class="company-card reveal reveal-delay-1" onclick="openModal('67bits')">
+            <div class="company-media">
+              <video src="67 bits/67 Bits Portfolio.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="company-info">
+              <h3 class="company-name">67 Bits Studio</h3>
+              <p class="company-role">Game Developer</p>
+              <p class="company-count" data-i18n="cc-67">18 jogos · Hypercasual Mobile</p>
               <span class="company-arrow">→</span>
             </div>
           </div>
@@ -2335,20 +2336,7 @@
             </div>
           </div>
 
-          <div class="company-card reveal reveal-delay-1" onclick="openModal('clickideia')">
-            <div class="company-media"
-              data-slides='["Clickideia/Casa Sombra - Clickideia.mp4","Clickideia/Fabulas - Clickideia.mp4","Clickideia/Festa à Fantasia - Clickideia.mp4","Clickideia/Quiz.mp4","Clickideia/Tabuleiro.mp4","Clickideia/Viagem ao Espaço.mp4"]'>
-              <img src="Clickideia/Casa Sombra - Clickideia.mp4" alt="Clickideia">
-            </div>
-            <div class="company-info">
-              <h3 class="company-name">Clickideia</h3>
-              <p class="company-role">Game Developer</p>
-              <p class="company-count" data-i18n="cc-click">Jogos Educacionais · Web</p>
-              <span class="company-arrow">→</span>
-            </div>
-          </div>
-
-          <div class="company-card reveal reveal-delay-2" onclick="openModal('gofretes')">
+          <div class="company-card reveal" onclick="openModal('gofretes')">
             <div class="company-media">
               <img src="other Experiences/GOFretes.webp" alt="GOFretes">
             </div>
@@ -2360,7 +2348,7 @@
             </div>
           </div>
 
-          <div class="company-card reveal" onclick="openModal('perimeter')">
+          <div class="company-card reveal reveal-delay-1" onclick="openModal('perimeter')">
             <div class="company-media">
               <div class="company-logo-area"><span class="company-icon">🍁</span></div>
             </div>
@@ -2368,6 +2356,18 @@
               <h3 class="company-name">Perimeter <span class="intl-badge">🌍 Canadá</span></h3>
               <p class="company-role">Software Developer</p>
               <p class="company-count" data-i18n="cc-perim">Montreal · Unity + WebGL</p>
+              <span class="company-arrow">→</span>
+            </div>
+          </div>
+
+          <div class="company-card reveal reveal-delay-2" onclick="openModal('topmid')">
+            <div class="company-media">
+              <div class="company-logo-area"><span class="company-icon">🚀</span></div>
+            </div>
+            <div class="company-info">
+              <h3 class="company-name">TopMid Studio</h3>
+              <p class="company-role">CEO & Game Developer</p>
+              <p class="company-count" data-i18n="cc-topmid">Empresa Própria · Unity + Unreal + VR/AR</p>
               <span class="company-arrow">→</span>
             </div>
           </div>
@@ -2997,6 +2997,11 @@
   document.querySelectorAll('.company-media[data-slides]').forEach(mediaEl => {
     const slides = JSON.parse(mediaEl.dataset.slides);
     if (slides.length <= 1) return;
+    const interval = parseInt(mediaEl.dataset.interval, 10) || 5000;
+    // Optional per-slide start offset (seconds) for the card preview only.
+    let starts = [];
+    try { starts = JSON.parse(mediaEl.dataset.starts || '[]'); } catch (e) { starts = []; }
+    const startAt = i => (starts[i] || 0);
     let current = 0;
 
     // Build stacked pool — all elements appended immediately so browser starts loading
@@ -3017,21 +3022,34 @@
       return el;
     });
 
+    // Seek the first (already-visible) slide to its start offset once it's ready.
+    if (pool[0].tagName === 'VIDEO' && startAt(0) > 0) {
+      let seeked = false;
+      const seek0 = () => {
+        if (seeked || pool[0].readyState < 1) return;
+        try { pool[0].currentTime = startAt(0); seeked = true; } catch (e) {}
+        pool[0].play().catch(() => {});
+      };
+      pool[0].addEventListener('loadedmetadata', seek0);
+      pool[0].addEventListener('canplay', seek0);
+      seek0();
+    }
+
     setInterval(() => {
       const next = (current + 1) % slides.length;
       const inEl = pool[next];
       const outEl = pool[current];
 
-      // Start video playback from beginning when it becomes active
+      // Start video playback from its (optional) offset when it becomes active
       if (inEl.tagName === 'VIDEO') {
-        inEl.currentTime = 0;
+        try { inEl.currentTime = startAt(next); } catch (e) {}
         inEl.play().catch(() => { });
       }
 
       inEl.style.opacity = '1';
       outEl.style.opacity = '0';
       current = next;
-    }, 5000);
+    }, interval);
   });
 
   // ─── SCROLL REVEAL ───
@@ -3039,17 +3057,6 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // ─── CYCLING CARD VIDEOS (plays a playlist in order, looping) ───
-  document.querySelectorAll('video.cycle-video').forEach(v => {
-    const sources = (v.dataset.sources || '').split('|').map(s => s.trim()).filter(Boolean);
-    if (!sources.length) return;
-    let i = 0;
-    const play = () => { v.src = sources[i]; v.play().catch(() => {}); };
-    // Advance only when a clip finishes, so the playlist always starts at index 0 (Realtime Render).
-    v.addEventListener('ended', () => { i = (i + 1) % sources.length; play(); });
-    play();
-  });
 
   // ─── MODAL DATA ───
   const modalData = {
